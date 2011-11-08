@@ -3,6 +3,6 @@
 
 #include "trieq.h"
 
-int forwordLu(float *, float *, int);
+void lu(float *, float *, int, int);
 
 #endif
