@@ -1,13 +1,46 @@
-#ifndef __TRIEQ_H
-#define __TRIEQ_H
+/******************************************************************
+*  三对角线性方程组的基本求解方法程序
+*　　－－－三对角线性方程组求解算法中使用的宏代换定义的公用头文件
+*  
+*  文件名：trieq.h   
+*  版    权：共享
+*
+*  算法编写：刘智翔   
+*  程序编写：郑汉垣     
+*  创建时间：2010.12.24 21:30 
+*  版本号：Ｖ1.3
+*  修改人：郑汉垣
+*  修改时间：2010.12.24 21:35
+*******************************************************************/
 
-#define a(i) A[(i - 1) * 4 + 0]
-#define b(i) A[(i - 1) * 4 + 1]
-#define c(i) A[(i - 1) * 4 + 2]
-#define d(i) A[(i - 1) * 4 + 3]
-#define x(i) X[i - 1]
+/* 避免重复包含该头文件 */
+#ifndef _TRIEQ_H_
+#define _TRIEQ_H_
 
-#define floatsize sizeof(float)
-#define intsize sizeof(int)
+#include <stdio.h>
+#include <stdlib.h>
 
-#endif
+/* 下面定义数据存储与访问的方式１,两种方法皆可行 */
+/* A(N,4): A(i-1,0)--a(i), i=1~N)
+   A(i-1,1)--b(i), A(i-1,2)--c(i),A(i-1,3)--d(i)*/
+//#define a(i) *( A+(i-1)*4+0 )
+//#define b(i) *( A+(i-1)*4+1 )
+//#define c(i) *( A+(i-1)*4+2 )
+//#define d(i) *( A+(i-1)*4+3 )
+//#define x(i) *( X+i-1 )
+/* 为了让下标从1～N的方式，特别作如上定义，使之与MATLAB方式一致*/
+
+/* 下面定义数据存储与访问的方式２ */
+/* A(N,4): A(i-1,0)--a(i), i=1~N)２ 
+   A(i-1,1)--b(i), A(i-1,2)--c(i),A(i-1,3)--d(i)*/
+#define a(i) A[(i-1)*4+0]
+#define b(i) A[(i-1)*4+1]
+#define c(i) A[(i-1)*4+2]
+#define d(i) A[(i-1)*4+3]
+#define x(i) X[i-1]
+/* 为了让下标从1～N的方式，特别作如上定义，使之与MATLAB方式一致*/ 
+
+#define doublesize sizeof(double)
+#define longsize sizeof(long)
+
+#endif   //_TRIEQ_H
