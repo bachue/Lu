@@ -28,6 +28,7 @@
 *****************************************************************/
 int LinearEqRecduce(double *A,long n, double *Mat2);  //对Matq(q,4)对应的三对角方程进行约化
 int forwardLU(double *A,long n, double *X);      //主进程求解2*p行数的缩减方程，获得2*p个解，x2p(2*p)
+int bilateralLU(double *A,long n, double *X);      //主进程求解2*p行数的缩减方程，获得2*p个解，x2p(2*p)
 int LinearEqBacktrack(double *A, long n, double *X2, double *X);   //对Mat(n,4)对应的三对角方程进行回代
  
 #endif   //_LU_H_

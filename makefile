@@ -15,17 +15,18 @@ objects+= main.o
 #可运行文件名
 execname=trieq_mpi
 CC=mpicc
+opts=-fopenmp -std=c99
 
 $(execname): $(objects) 
-	$(CC) -o $(execname) $(objects) 
+	$(CC) -o $(execname) $(opts) $(objects) 
 trieq:$(objects)
 	$(CC) -o trieq $(objects)
 main.o:main.c test.h lu.h  trieq.h
-	$(CC) -c main.c
+	$(CC) -c $(opts)  main.c
 test.o:test.c  test.h  trieq.h
-	$(CC) -c test.c 
+	$(CC) -c $(opts) test.c 
 lu.o:lu.c  lu.h  trieq.h
-	$(CC) -c lu.c
+	$(CC) -c $(opts) lu.c
 clean:
 	rm *.o trieq_mpi
 .PHONY : run

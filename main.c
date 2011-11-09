@@ -21,7 +21,7 @@
 #include <stdio.h>
 #include <math.h>
 
-//  #include <omp.h>
+#include <omp.h>
 
 #include "mpi.h"
 
@@ -48,18 +48,11 @@ int main(int argc,char *argv[])
     double *Mat;
 
     long i,j,n;
-    int l,nn,ret,root,count;
+    int l,ret,root,count;
 
  
    //m=1024*1024*64;   //m=2**n  (n=26)
-   nn=28;
-   m=1;
-   for(k=1;k<=nn;k++) 
-   {
-	m=2*m;
-    }
-   printf("m=%ld\n",m);
-
+	m = 1 << 24;
     MPI_Init(&argc,&argv);   /*MPI init */
     MPI_Comm_rank(MPI_COMM_WORLD,&myid);     /* processor id */
     MPI_Comm_size(MPI_COMM_WORLD,&numprocs); /* processor size */
@@ -67,11 +60,11 @@ int main(int argc,char *argv[])
 
     p=numprocs;  //进程总数
     q=m/p;
- 
-  /*  fprintf(stderr,"Hello,world! Process %d of %d on %s\n",myid,numprocs,processor_name); */
-  
+
+   printf("m=%ld, p=%ld, q=%ld\n",m, p, q);
+
    printf("Hello, Process %d of %d \n",myid,numprocs);
-   
+
    starttime = MPI_Wtime();   //计时开始
 
    root = 0 ;  //主进程号
@@ -88,7 +81,7 @@ int main(int argc,char *argv[])
    preDate(A,n,myid,numprocs);
    /* 验证数据,打印输出*/
    printMat(A,n,myid,numprocs);
-   
+
    /* 若申请内存不成功，则退出程序 */ 
    if((X = (double *)malloc(doublesize * n))==NULL)
    {
@@ -117,7 +110,7 @@ int main(int argc,char *argv[])
      if(myid==0)
      { 
       n=2*p;
-      forwardLU(Mat2p,n,X2p);  //主进程求解2*p行数的缩减方程，获得2*p个解，x2p(2*p)
+		bilateralLU(Mat2p, n, X2p);  //主进程求解2*p行数的缩减方程，获得2*p个解，x2p(2*p)
       }
      
        /* =========同步 ==========*/

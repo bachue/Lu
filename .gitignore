@@ -1,1 +1,3 @@
 tags
+*.o
+trieq_mpi
